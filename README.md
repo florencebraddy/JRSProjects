@@ -1,2 +1,2 @@
-# JRSProjects
+# Blog MVC
 JRS Night Class Projects
