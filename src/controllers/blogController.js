@@ -14,19 +14,12 @@ const getAllUsers = async (request, response) => {
   }
 };
 
-const getUserProfile = async (request, response) => {
+const getUsername = async (request, response) => {
   try {
-    console.log("GET USER PROFILE");
-    var userInstance = await UserModel.find({
-      username: "SKB",
-      password: "Floisthebestwifeever"
-    });
+    console.log("GET Username");
+    var userInstance = await UserModel.find({ firstname, lastname });
     console.log(userInstance);
-    var userMap = {};
-    userInstance.map(user => {
-      userMap[user.id] = user;
-    });
-    response.send(userMap);
+    response.send(userInstance);
   } catch (error) {
     response.status(500).send(error);
   }
@@ -43,6 +36,7 @@ const postUser = async (request, response) => {
     response.status(500).send(error);
   }
 };
+
 const putUser = async (request, response) => {
   try {
     console.log("PUT USER");
@@ -55,4 +49,10 @@ const putUser = async (request, response) => {
     response.status(500).send(error);
   }
 };
-module.exports = { getAllUsers, getUserProfile, postUser, putUser, deleteUser };
+module.exports = {
+  getAllUsers,
+  // getUserProfile,
+  postUser,
+  putUser,
+  getUsername
+};

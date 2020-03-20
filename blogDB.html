@@ -4,12 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../blogdb/blogfullstackapp.css"
-    />
     <title>Date Night - Mate Night</title>
+
+    <style>
+    body {font-family: Arial, Helvetica, sans-serif;}
+        * {box-sizing: border-box;}
+        
+         .forgotusername {
+          display: none;
+          position: fixed;
+          bottom: 0;
+          right: 15px;
+          border: 3px solid #f1f1f1;
+          z-index: 9;
+        }
+
+
+        .form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+}
+          
+          </style>
   </head>
   <script>
     async function postUser() {
@@ -52,21 +69,49 @@ fetch("http://localhost:3000/users/", requestOptions)
   .then(result => document.getElementById("allUsers").innerHTML = result);
 }
 
-//GETUSER
+
+//GETCREDENTIALS
+function openForm() {
+  document.getElementById("forgotun").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("forgotun").style.display = "none";
+}
+
+async function forgotUsername(){
+  let fn = document.getElementById("firstname").value;
+      let ln = document.getElementById("lastname").value;
+      let un = document.getElementById("username").value;
+      var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+fetch("http://localhost:3000/user/", requestOptions)
+  .then(response => response.text())
+   .then(result => document.getElementById("username"));
+
+}
+
+//GETUSERPROFILE this actually may be a post request - research further
+/*
 async function getUserProfile(){
       var myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
 var requestOptions = {
   method: 'GET',
-  headers: {
-          "Content-Type": "application/json"
-        },
+  headers: myHeaders,
+  redirect: 'follow'
 };
 
-fetch("http://localhost:3000/user", requestOptions)
+fetch("http://localhost:3000/user/", requestOptions)
   .then(response => response.text())
-  .then(result => console.log(result));
-}
+   .then(result => console.log(result));
+}*/
 
 
 
@@ -89,7 +134,6 @@ fetch("http://localhost:3000/user", requestOptions)
     }
 */
 
-//CSS
 
 
   </script>
@@ -97,7 +141,7 @@ fetch("http://localhost:3000/user", requestOptions)
     <div class="top-bar">
       <h1 id="page-title">Date Night Mate Night</h1>
       <div class = "sign-in-pop-up" id ="pop-up">
-      <form action="/users" class="form-container">
+      <form class="form-container">
         <label for="user-name">
         <strong>User Name</strong>
         </label>
@@ -106,8 +150,20 @@ fetch("http://localhost:3000/user", requestOptions)
         <strong>Password</strong>
         </label>
         <input type="password" placeholder="Password" name="pw" required>
-        <button type="button" id="sign-in" onclick = getUserProfile()>Sign In</button>
+        <button type="button" id="sign-in" >Sign In</button>
+</form>
+</br>
+</br>
+        <button class="forgotun" onclick="openForm()">Forgot Username?</button>
+<form class = "forgotusername" id = "forgotun">
+    <label for="firstname"><b>First Name</b></label>
+    <input type="text" placeholder="Enter First Name" name="firstname" required>
 
+    <label for="lastname"><b>Last Name</b></label>
+    <input type="lastname" placeholder="Enter Last Name" name="lastname" required>
+
+    <button type="submit" class="getun" onclick = getUsername()>Submit</button>
+    <button type="submit" class="close" onclick="closeForm()">Close</button>
       </form>
     </div>
 
@@ -117,8 +173,8 @@ fetch("http://localhost:3000/user", requestOptions)
     </div>
     <p>
       Twiddling your thumbs, thinking about what to do on a Friday night with
-      your spouse or best mate? Check out all the cool stuff London has to offer
-      to make the perfect day or night out! Real people, real reviews, real fun.
+      your spouse or best mate? Check out all the cool stuff London has to offer,
+      setting you up for a perfect day or night out! Real people, real reviews, real fun.
     </p>
     <div class="new-user-form">
       <form action="/user" method="POST">
