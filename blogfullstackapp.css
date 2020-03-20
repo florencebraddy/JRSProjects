@@ -1,0 +1,36 @@
+body {
+  background-image: url("Backgound.jpg");
+  height: 900px;
+  background-position: center;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  background-size: 68%;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.button {
+  transition-duration: 0.4s;
+  width: 150px;
+  border-radius: 13px;
+  color: black;
+  background-color: lightgray;
+}
+
+.button:hover {
+  background-color: rgb(209, 157, 209);
+  color: white;
+}
+
+.newuUserForm {
+  display: flex;
+  justify-content: start;
+}

@@ -1,15 +1,4 @@
-const { Usermodel } = require("../models/blogUserModel");
-const postUser = async (request, response) => {
-  try {
-    //can remove once I know it's working
-    console.log("NEW USER");
-    var userInstance = new Usermodel(request.body);
-    const created = await Usermodel.create(userInstance);
-    response.send(created);
-  } catch (error) {
-    response.status(500).send(error);
-  }
-};
+const { UserModel } = require("../models/blogUserModel");
 const getAllUsers = async (request, response) => {
   try {
     console.log("GET USERS");
@@ -25,4 +14,45 @@ const getAllUsers = async (request, response) => {
   }
 };
 
-module.exports = { postUser, getAllUsers };
+const getUserProfile = async (request, response) => {
+  try {
+    console.log("GET USER PROFILE");
+    var userInstance = await UserModel.find({
+      username: "SKB",
+      password: "Floisthebestwifeever"
+    });
+    console.log(userInstance);
+    var userMap = {};
+    userInstance.map(user => {
+      userMap[user.id] = user;
+    });
+    response.send(userMap);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+};
+
+const postUser = async (request, response) => {
+  try {
+    console.log("POST USER");
+    var userInstance = new UserModel(request.body);
+    const created = await UserModel.create(userInstance);
+    response.send(created);
+  } catch (error) {
+    console.log(error);
+    response.status(500).send(error);
+  }
+};
+const putUser = async (request, response) => {
+  try {
+    console.log("PUT USER");
+    var userInstance = await UserModel.findOneAndUpdate(
+      request.query,
+      request.body
+    );
+    response.send(userInstance);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+};
+module.exports = { getAllUsers, getUserProfile, postUser, putUser, deleteUser };
